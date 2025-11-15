@@ -1,0 +1,64 @@
+# QuantScale: 4-GPU Distributed Training Configuration
+#
+# Run with: torchrun --nproc_per_node=4 scripts/train_distributed.py --config configs/training/4gpu.yaml
+#
+# Copyright (c) 2025 Vithushan Jeyapahan, Vijeth Ltd
+# Licensed under the Apache License 2.0
+
+# Data configuration
+data:
+  train_data: "data/train.parquet"
+  val_data: "data/val.parquet"
+  sequence_length: 100
+  prediction_horizon: 1
+  target: "returns"
+  batch_size: 64  # Per GPU
+  num_workers: 8
+
+# Model configuration
+model:
+  type: "transformer"
+  input_dim: 50
+  hidden_dim: 512
+  num_layers: 6
+  num_heads: 16
+  dropout: 0.1
+  output_dim: 1
+
+# Training configuration
+training:
+  epochs: 200
+  learning_rate: 0.002
+  weight_decay: 0.0001
+  gradient_clip: 1.0
+  early_stopping_patience: 20
+
+# Distributed configuration
+distributed:
+  backend: "nccl"
+  find_unused_parameters: false
+
+# Optimizer configuration
+optimizer:
+  type: "adam"
+  betas: [0.9, 0.999]
+  eps: 1e-8
+
+# Scheduler configuration
+scheduler:
+  type: "reduce_on_plateau"
+  mode: "min"
+  factor: 0.5
+  patience: 7
+  min_lr: 1e-6
+
+# Checkpointing
+checkpoint:
+  dir: "checkpoints/distributed"
+  save_best_only: true
+
+# Logging
+logging:
+  use_mlflow: true
+  experiment_name: "quantscale-distributed-4gpu"
+  log_interval: 10

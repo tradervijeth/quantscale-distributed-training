@@ -1,0 +1,98 @@
+# QuantScale: Distributed Training Framework for Financial Time Series
+#
+# Docker Compose configuration for multi-container orchestration
+#
+# Copyright (c) 2025 Vithushan Jeyapahan, Vijeth Ltd
+# Licensed under the Apache License 2.0
+# Contact: finance@vijeth.com
+
+version: '3.8'
+
+services:
+  # Training container
+  quantscale-train:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: quantscale:latest
+    container_name: quantscale-train
+    runtime: nvidia
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+      - CUDA_VISIBLE_DEVICES=0,1,2,3
+      - PYTHONUNBUFFERED=1
+    volumes:
+      - ./data:/workspace/data
+      - ./checkpoints:/workspace/checkpoints
+      - ./logs:/workspace/logs
+      - ./configs:/workspace/configs
+    command: /bin/bash
+    stdin_open: true
+    tty: true
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+
+  # Jupyter notebook server
+  quantscale-jupyter:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: quantscale:latest
+    container_name: quantscale-jupyter
+    runtime: nvidia
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+      - PYTHONUNBUFFERED=1
+    ports:
+      - "8888:8888"
+    volumes:
+      - ./data:/workspace/data
+      - ./checkpoints:/workspace/checkpoints
+      - ./logs:/workspace/logs
+      - ./notebooks:/workspace/notebooks
+    command: >
+      bash -c "jupyter notebook --ip=0.0.0.0 --port=8888 --no-browser
+      --allow-root --NotebookApp.token='' --NotebookApp.password=''"
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+
+  # TensorBoard server
+  tensorboard:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: quantscale:latest
+    container_name: quantscale-tensorboard
+    ports:
+      - "6006:6006"
+    volumes:
+      - ./logs:/workspace/logs
+    command: tensorboard --logdir=/workspace/logs --host=0.0.0.0 --port=6006
+
+  # MLflow tracking server
+  mlflow:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: quantscale:latest
+    container_name: quantscale-mlflow
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./mlruns:/workspace/mlruns
+    command: mlflow server --host=0.0.0.0 --port=5000 --backend-store-uri=/workspace/mlruns
+
+networks:
+  default:
+    name: quantscale-network
+    driver: bridge

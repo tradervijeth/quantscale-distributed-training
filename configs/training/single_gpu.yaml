@@ -1,0 +1,57 @@
+# QuantScale: Single GPU Training Configuration
+#
+# Copyright (c) 2025 Vithushan Jeyapahan, Vijeth Ltd
+# Licensed under the Apache License 2.0
+
+# Data configuration
+data:
+  train_data: "data/train.parquet"
+  val_data: "data/val.parquet"
+  test_data: "data/test.parquet"
+  sequence_length: 100
+  prediction_horizon: 1
+  target: "returns"
+  batch_size: 32
+  num_workers: 4
+
+# Model configuration
+model:
+  type: "transformer"  # or "lstm"
+  input_dim: 50
+  hidden_dim: 256
+  num_layers: 4
+  num_heads: 8
+  dropout: 0.1
+  output_dim: 1
+
+# Training configuration
+training:
+  epochs: 100
+  learning_rate: 0.001
+  weight_decay: 0.0001
+  gradient_clip: 1.0
+  early_stopping_patience: 10
+
+# Optimizer configuration
+optimizer:
+  type: "adam"
+  betas: [0.9, 0.999]
+  eps: 1e-8
+
+# Scheduler configuration
+scheduler:
+  type: "reduce_on_plateau"
+  mode: "min"
+  factor: 0.5
+  patience: 5
+  min_lr: 1e-6
+
+# Checkpointing
+checkpoint:
+  dir: "checkpoints"
+  save_best_only: true
+
+# Logging
+logging:
+  use_mlflow: false
+  log_interval: 10
