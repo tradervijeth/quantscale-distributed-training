@@ -13,8 +13,14 @@ from setuptools import setup, find_packages
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
-with open("requirements.txt", "r", encoding="utf-8") as fh:
-    requirements = [line.strip() for line in fh if line.strip() and not line.startswith("#")]
+def read_requirements(filename):
+    """Read requirements from file."""
+    with open(filename, "r", encoding="utf-8") as fh:
+        return [line.strip() for line in fh if line.strip() and not line.startswith("#")]
+
+requirements = read_requirements("requirements.txt")
+requirements_dev = read_requirements("requirements-dev.txt")
+requirements_test = read_requirements("requirements-test.txt")
 
 setup(
     name="quantscale",
@@ -43,13 +49,12 @@ setup(
     python_requires=">=3.10",
     install_requires=requirements,
     extras_require={
-        "dev": [
-            "pytest>=7.4.0",
-            "pytest-cov>=4.1.0",
-            "black>=23.0.0",
-            "flake8>=6.0.0",
-            "mypy>=1.5.0",
-            "isort>=5.12.0",
+        "dev": requirements_dev,
+        "test": requirements_test,
+        "all": requirements_dev + requirements_test,
+        "onnx": [
+            "onnx>=1.15.0",
+            "onnxruntime>=1.16.0",
         ],
     },
     license="Apache License 2.0",

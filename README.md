@@ -36,8 +36,30 @@ Co-Founder & ML Engineer, Vijeth Ltd
 ```bash
 git clone https://github.com/tradervijeth/quantscale-distributed-training.git
 cd quantscale-distributed-training
+
+# Basic installation
 pip install -e .
+
+# With development tools
+pip install -e ".[dev]"
+
+# With all dependencies
+make install-all
 ```
+
+## 🎯 Quick Demo
+
+Run the complete end-to-end demo (no external data required):
+
+```bash
+python examples/demo.py
+```
+
+This will:
+- Generate synthetic financial data
+- Engineer features with technical indicators
+- Train both Transformer and LSTM models
+- Evaluate and visualize results
 
 ## 🚀 Quick Start
 
@@ -60,6 +82,73 @@ trainer.fit(epochs=100)
 ### Multi-GPU Training
 ```bash
 torchrun --nproc_per_node=4 scripts/train_distributed.py --config configs/training/4gpu.yaml
+```
+
+## 🛠️ Development Workflow
+
+### Using Makefile
+
+```bash
+# Set up development environment
+make dev
+
+# Run tests
+make test
+
+# Run tests with coverage
+make test-cov
+
+# Format code
+make format
+
+# Lint code
+make lint
+
+# Run all checks (format, lint, test)
+make check
+
+# Run benchmarks
+make benchmark
+
+# Run demo
+make demo
+
+# See all available commands
+make help
+```
+
+## 📊 Performance Benchmarking
+
+Measure model performance and validate scaling efficiency:
+
+```bash
+# Benchmark transformer model
+python scripts/benchmark.py --model transformer --mode both
+
+# Benchmark with GPU scaling
+python scripts/benchmark.py --gpu-scaling
+
+# Custom benchmark
+python scripts/benchmark.py --hidden-dim 512 --num-iterations 200 --output results.csv
+```
+
+## 🚀 Model Export (ONNX)
+
+Export trained models for production deployment:
+
+```bash
+# Export model to ONNX
+python scripts/export_model.py \
+  --checkpoint checkpoints/best_model.pt \
+  --model transformer \
+  --input-dim 50 \
+  --hidden-dim 256 \
+  --verify
+
+# Use in production
+import onnxruntime as ort
+session = ort.InferenceSession("model.onnx")
+output = session.run(None, {'input': your_data})
 ```
 
 ## 📁 Project Structure

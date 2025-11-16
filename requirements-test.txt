@@ -1,0 +1,22 @@
+# Test dependencies for QuantScale
+#
+# Install with: pip install -r requirements-test.txt
+#
+# Copyright (c) 2025 Vithushan Jeyapahan, Vijeth Ltd
+# Licensed under the Apache License 2.0
+
+# Testing framework
+pytest>=7.4.0
+pytest-cov>=4.1.0
+pytest-xdist>=3.3.0
+pytest-timeout>=2.1.0
+pytest-mock>=3.11.0
+pytest-benchmark>=4.0.0
+
+# Test utilities
+coverage>=7.3.0
+hypothesis>=6.88.0
+
+# Performance testing
+pytest-profiling>=1.7.0
+memory-profiler>=0.61.0
