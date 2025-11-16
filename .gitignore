@@ -45,8 +45,8 @@ env/
 htmlcov/
 .tox/
 
-# Data
-data/
+# Data files (but not quantscale/data/ package)
+/data/
 *.csv
 *.parquet
 *.hdf5

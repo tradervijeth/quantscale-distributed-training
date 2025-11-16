@@ -43,8 +43,9 @@ class PositionalEncoding(nn.Module):
             torch.arange(0, d_model, 2).float() * (-math.log(10000.0) / d_model)
         )
 
+        # Handle both even and odd d_model dimensions
         pe[:, 0::2] = torch.sin(position * div_term)
-        pe[:, 1::2] = torch.cos(position * div_term)
+        pe[:, 1::2] = torch.cos(position * div_term[: d_model // 2])
         pe = pe.unsqueeze(0)  # Add batch dimension
 
         self.register_buffer("pe", pe)
