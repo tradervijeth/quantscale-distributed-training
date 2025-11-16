@@ -13,13 +13,17 @@ from setuptools import setup, find_packages
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
+
 def read_requirements(filename):
     """Read requirements from file."""
     try:
         with open(filename, "r", encoding="utf-8") as fh:
-            return [line.strip() for line in fh if line.strip() and not line.startswith("#")]
+            return [
+                line.strip() for line in fh if line.strip() and not line.startswith("#")
+            ]
     except FileNotFoundError:
         return []
+
 
 requirements = read_requirements("requirements.txt")
 requirements_dev = read_requirements("requirements-dev.txt")
