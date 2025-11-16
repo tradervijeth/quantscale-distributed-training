@@ -9,8 +9,8 @@ Contact: finance@vijeth.com
 """
 
 import logging
-from typing import Dict, Any, Optional, Callable
 from pathlib import Path
+from typing import Any, Callable, Dict, Optional
 
 import torch
 import torch.nn as nn
@@ -21,8 +21,8 @@ try:
     from ray import tune
     from ray.tune import CLIReporter
     from ray.tune.schedulers import ASHAScheduler, PopulationBasedTraining
-    from ray.tune.search.optuna import OptunaSearch
     from ray.tune.search.hyperopt import HyperOptSearch
+    from ray.tune.search.optuna import OptunaSearch
 
     RAY_AVAILABLE = True
 except ImportError:

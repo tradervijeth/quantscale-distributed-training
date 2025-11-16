@@ -14,7 +14,7 @@ import json
 import logging
 import time
 from pathlib import Path
-from typing import Dict, List, Any
+from typing import Any, Dict, List
 
 import numpy as np
 import pandas as pd
@@ -22,8 +22,8 @@ import torch
 import torch.nn as nn
 from torch.utils.data import DataLoader, TensorDataset
 
-from quantscale.models.transformer import TemporalFusionTransformer
 from quantscale.models.lstm import BidirectionalLSTM
+from quantscale.models.transformer import TemporalFusionTransformer
 
 logging.basicConfig(
     level=logging.INFO,

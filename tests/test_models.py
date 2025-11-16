@@ -11,8 +11,8 @@ Contact: finance@vijeth.com
 import pytest
 import torch
 
-from quantscale.models.transformer import TemporalFusionTransformer
 from quantscale.models.lstm import BidirectionalLSTM, StackedLSTM
+from quantscale.models.transformer import TemporalFusionTransformer
 
 
 class TestTemporalFusionTransformer:

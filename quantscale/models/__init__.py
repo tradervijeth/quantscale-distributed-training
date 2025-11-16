@@ -8,8 +8,8 @@ Licensed under the Apache License 2.0
 Contact: finance@vijeth.com
 """
 
-from quantscale.models.transformer import TemporalFusionTransformer
 from quantscale.models.lstm import BidirectionalLSTM
+from quantscale.models.transformer import TemporalFusionTransformer
 
 __all__ = [
     "TemporalFusionTransformer",

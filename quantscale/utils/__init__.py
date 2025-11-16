@@ -9,10 +9,10 @@ Contact: finance@vijeth.com
 """
 
 from quantscale.utils.metrics import (
-    sharpe_ratio,
-    max_drawdown,
     directional_accuracy,
     information_ratio,
+    max_drawdown,
+    sharpe_ratio,
 )
 
 __all__ = [

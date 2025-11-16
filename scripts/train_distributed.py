@@ -20,14 +20,14 @@ from torch.optim import Adam
 from torch.optim.lr_scheduler import ReduceLROnPlateau
 
 from quantscale.data.loaders import FinancialDataLoader
-from quantscale.models.transformer import TemporalFusionTransformer
 from quantscale.models.lstm import BidirectionalLSTM
+from quantscale.models.transformer import TemporalFusionTransformer
 from quantscale.training.distributed import (
     DistributedTrainer,
-    setup_distributed,
     cleanup_distributed,
     create_distributed_dataloaders,
     is_main_process,
+    setup_distributed,
 )
 
 logging.basicConfig(

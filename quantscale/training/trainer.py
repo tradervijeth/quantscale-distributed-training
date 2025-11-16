@@ -11,13 +11,13 @@ Contact: finance@vijeth.com
 import logging
 import os
 from pathlib import Path
-from typing import Optional, Dict, Any, Callable, Union
+from typing import Any, Callable, Dict, Optional, Union
 
 import torch
 import torch.nn as nn
-from torch.utils.data import DataLoader
 from torch.optim import Optimizer
 from torch.optim.lr_scheduler import _LRScheduler
+from torch.utils.data import DataLoader
 from tqdm import tqdm
 
 try:
@@ -28,10 +28,10 @@ except ImportError:
     MLFLOW_AVAILABLE = False
 
 from quantscale.utils.metrics import (
-    sharpe_ratio,
-    max_drawdown,
-    directional_accuracy,
     calculate_all_metrics,
+    directional_accuracy,
+    max_drawdown,
+    sharpe_ratio,
 )
 
 logger = logging.getLogger(__name__)

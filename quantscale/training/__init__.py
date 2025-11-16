@@ -8,8 +8,8 @@ Licensed under the Apache License 2.0
 Contact: finance@vijeth.com
 """
 
-from quantscale.training.trainer import QuantScaleTrainer
 from quantscale.training.distributed import DistributedTrainer
+from quantscale.training.trainer import QuantScaleTrainer
 
 __all__ = [
     "QuantScaleTrainer",

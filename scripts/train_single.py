@@ -18,8 +18,8 @@ from torch.optim import Adam
 from torch.optim.lr_scheduler import ReduceLROnPlateau
 
 from quantscale.data.loaders import FinancialDataLoader, create_data_loaders
-from quantscale.models.transformer import TemporalFusionTransformer
 from quantscale.models.lstm import BidirectionalLSTM
+from quantscale.models.transformer import TemporalFusionTransformer
 from quantscale.training.trainer import QuantScaleTrainer
 
 logging.basicConfig(

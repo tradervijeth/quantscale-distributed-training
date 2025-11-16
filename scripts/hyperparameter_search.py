@@ -17,8 +17,8 @@ import ray
 from ray import tune
 
 from quantscale.data.loaders import FinancialDataLoader
-from quantscale.models.transformer import TemporalFusionTransformer
 from quantscale.models.lstm import BidirectionalLSTM
+from quantscale.models.transformer import TemporalFusionTransformer
 from quantscale.optimization.hyperparameter import HyperparameterSearch
 
 logging.basicConfig(
