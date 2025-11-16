@@ -8,26 +8,47 @@ Licensed under the Apache License 2.0
 Contact: finance@vijeth.com
 """
 
-from setuptools import setup, find_packages
+from setuptools import find_packages, setup
 
-with open("README.md", "r", encoding="utf-8") as fh:
-    long_description = fh.read()
+# Read README for long description
+try:
+    with open("README.md", "r", encoding="utf-8") as fh:
+        long_description = fh.read()
+except FileNotFoundError:
+    long_description = (
+        "Production-grade distributed training framework for financial time series"
+    )
 
+# Core dependencies
+requirements = [
+    "torch>=2.0.0",
+    "numpy>=1.24.0",
+    "pandas>=2.0.0",
+    "scikit-learn>=1.3.0",
+    "mlflow>=2.8.0",
+    "ray[tune]>=2.8.0",
+    "pyyaml>=6.0",
+    "tqdm>=4.65.0",
+    "tensorboard>=2.14.0",
+]
 
-def read_requirements(filename):
-    """Read requirements from file."""
-    try:
-        with open(filename, "r", encoding="utf-8") as fh:
-            return [
-                line.strip() for line in fh if line.strip() and not line.startswith("#")
-            ]
-    except FileNotFoundError:
-        return []
+# Development dependencies
+requirements_dev = [
+    "black>=23.0.0",
+    "flake8>=6.0.0",
+    "mypy>=1.5.0",
+    "isort>=5.12.0",
+    "pre-commit>=3.4.0",
+    "bandit>=1.7.5",
+]
 
-
-requirements = read_requirements("requirements.txt")
-requirements_dev = read_requirements("requirements-dev.txt")
-requirements_test = read_requirements("requirements-test.txt")
+# Test dependencies
+requirements_test = [
+    "pytest>=7.4.0",
+    "pytest-cov>=4.1.0",
+    "pytest-xdist>=3.3.0",
+    "pytest-mock>=3.11.0",
+]
 
 setup(
     name="quantscale",
