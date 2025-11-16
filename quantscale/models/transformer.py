@@ -78,7 +78,9 @@ class MultiHeadAttention(nn.Module):
         super().__init__()
 
         if d_model % num_heads != 0:
-            raise ValueError(f"d_model ({d_model}) must be divisible by num_heads ({num_heads})")
+            raise ValueError(
+                f"d_model ({d_model}) must be divisible by num_heads ({num_heads})"
+            )
 
         self.d_model = d_model
         self.num_heads = num_heads
@@ -135,8 +137,8 @@ class MultiHeadAttention(nn.Module):
         context = torch.matmul(attention_weights, V)
 
         # Concatenate heads
-        context = context.transpose(1, 2).contiguous().view(
-            batch_size, -1, self.d_model
+        context = (
+            context.transpose(1, 2).contiguous().view(batch_size, -1, self.d_model)
         )
 
         # Final linear projection

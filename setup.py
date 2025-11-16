@@ -15,8 +15,11 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 def read_requirements(filename):
     """Read requirements from file."""
-    with open(filename, "r", encoding="utf-8") as fh:
-        return [line.strip() for line in fh if line.strip() and not line.startswith("#")]
+    try:
+        with open(filename, "r", encoding="utf-8") as fh:
+            return [line.strip() for line in fh if line.strip() and not line.startswith("#")]
+    except FileNotFoundError:
+        return []
 
 requirements = read_requirements("requirements.txt")
 requirements_dev = read_requirements("requirements-dev.txt")

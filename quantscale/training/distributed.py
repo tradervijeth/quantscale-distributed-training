@@ -193,9 +193,7 @@ class DistributedTrainer(QuantScaleTrainer):
         self.world_size = get_world_size()
 
         if is_main_process():
-            logger.info(
-                f"Initialized distributed trainer on {self.world_size} GPUs"
-            )
+            logger.info(f"Initialized distributed trainer on {self.world_size} GPUs")
 
     def fit(
         self,

@@ -27,13 +27,15 @@ class TestFinancialDataLoader:
         np.random.seed(42)
         n_samples = 1000
 
-        data = pd.DataFrame({
-            "close": 100 + np.cumsum(np.random.randn(n_samples) * 0.5),
-            "volume": np.random.randint(1000, 10000, n_samples),
-            "feature1": np.random.randn(n_samples),
-            "feature2": np.random.randn(n_samples),
-            "target": np.random.randn(n_samples) * 0.01,
-        })
+        data = pd.DataFrame(
+            {
+                "close": 100 + np.cumsum(np.random.randn(n_samples) * 0.5),
+                "volume": np.random.randint(1000, 10000, n_samples),
+                "feature1": np.random.randn(n_samples),
+                "feature2": np.random.randn(n_samples),
+                "target": np.random.randn(n_samples) * 0.01,
+            }
+        )
 
         return data
 
@@ -156,12 +158,14 @@ class TestFinancialDataProcessor:
         np.random.seed(42)
         n_samples = 500
 
-        data = pd.DataFrame({
-            "close": 100 + np.cumsum(np.random.randn(n_samples) * 0.5),
-            "volume": np.random.randint(1000, 10000, n_samples),
-            "high": 100 + np.cumsum(np.random.randn(n_samples) * 0.5) + 1,
-            "low": 100 + np.cumsum(np.random.randn(n_samples) * 0.5) - 1,
-        })
+        data = pd.DataFrame(
+            {
+                "close": 100 + np.cumsum(np.random.randn(n_samples) * 0.5),
+                "volume": np.random.randint(1000, 10000, n_samples),
+                "high": 100 + np.cumsum(np.random.randn(n_samples) * 0.5) + 1,
+                "low": 100 + np.cumsum(np.random.randn(n_samples) * 0.5) - 1,
+            }
+        )
 
         return data
 
@@ -230,11 +234,7 @@ class TestFinancialDataProcessor:
         processor = FinancialDataProcessor(sample_data, price_col="close")
 
         # Chain multiple methods
-        result = (
-            processor.add_returns()
-            .add_volatility()
-            .add_moving_averages()
-        )
+        result = processor.add_returns().add_volatility().add_moving_averages()
 
         assert result is processor
         assert "log_return_1" in processor.data.columns

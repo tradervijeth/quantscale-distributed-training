@@ -26,7 +26,9 @@ import torch
 
 def generate_sample_data(n_samples=10000, n_features=50):
     """Generate sample financial time series data."""
-    print(f"Generating sample data with {n_samples} samples and {n_features} features...")
+    print(
+        f"Generating sample data with {n_samples} samples and {n_features} features..."
+    )
 
     # Generate synthetic price data
     np.random.seed(42)
@@ -81,9 +83,9 @@ def main():
 
     # Split data
     n = len(data)
-    train_data = data.iloc[:int(n * 0.7)]
-    val_data = data.iloc[int(n * 0.7):int(n * 0.85)]
-    test_data = data.iloc[int(n * 0.85):]
+    train_data = data.iloc[: int(n * 0.7)]
+    val_data = data.iloc[int(n * 0.7) : int(n * 0.85)]
+    test_data = data.iloc[int(n * 0.85) :]
 
     # Save data
     train_data.to_parquet(train_path, index=False)

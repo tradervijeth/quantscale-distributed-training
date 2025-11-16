@@ -105,7 +105,7 @@ def sortino_ratio(
     downside_returns = excess_returns[excess_returns < 0]
     if len(downside_returns) == 0:
         logger.warning("No negative returns, returning inf")
-        return float('inf')
+        return float("inf")
 
     downside_std = np.std(downside_returns, ddof=1)
 
@@ -192,7 +192,7 @@ def calmar_ratio(
 
     if mdd == 0:
         logger.warning("Zero max drawdown, returning inf")
-        return float('inf')
+        return float("inf")
 
     return float(annualized_return / mdd)
 
@@ -327,7 +327,7 @@ def profit_factor(
 
     if gross_loss == 0:
         if gross_profit > 0:
-            return float('inf')
+            return float("inf")
         return 0.0
 
     return float(gross_profit / gross_loss)
@@ -392,19 +392,15 @@ def calculate_all_metrics(
     metrics = {
         # Prediction accuracy
         "directional_accuracy": directional_accuracy(predictions, actuals),
-
         # Risk-adjusted metrics (on actual returns)
         "sharpe_ratio": sharpe_ratio(actuals, risk_free_rate, periods_per_year),
         "sortino_ratio": sortino_ratio(actuals, risk_free_rate, periods_per_year),
         "calmar_ratio": calmar_ratio(actuals, periods_per_year),
-
         # Drawdown
         "max_drawdown": max_drawdown(actuals),
-
         # Trading metrics
         "profit_factor": profit_factor(actuals),
         "win_rate": win_rate(actuals),
-
         # Basic statistics
         "mean_return": float(np.mean(actuals)),
         "std_return": float(np.std(actuals, ddof=1)),

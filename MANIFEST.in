@@ -1,0 +1,29 @@
+# Include requirements files in distribution
+include requirements.txt
+include requirements-dev.txt
+include requirements-test.txt
+
+# Include documentation
+include README.md
+include LICENSE
+include CHANGELOG.md
+include CONTRIBUTING.md
+include CODE_OF_CONDUCT.md
+include SECURITY.md
+
+# Include configuration files
+include setup.py
+include pytest.ini
+include Makefile
+include .pre-commit-config.yaml
+
+# Include configs
+recursive-include configs *.yaml
+
+# Exclude
+exclude .gitignore
+recursive-exclude tests *
+recursive-exclude scripts *
+recursive-exclude examples *
+recursive-exclude notebooks *
+recursive-exclude .github *

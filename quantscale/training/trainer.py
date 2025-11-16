@@ -22,6 +22,7 @@ from tqdm import tqdm
 
 try:
     import mlflow
+
     MLFLOW_AVAILABLE = True
 except ImportError:
     MLFLOW_AVAILABLE = False
@@ -134,7 +135,9 @@ class QuantScaleTrainer:
             "learning_rate": [],
         }
 
-        logger.info(f"Initialized trainer with {sum(p.numel() for p in model.parameters())} parameters")
+        logger.info(
+            f"Initialized trainer with {sum(p.numel() for p in model.parameters())} parameters"
+        )
 
     def fit(
         self,
@@ -156,13 +159,15 @@ class QuantScaleTrainer:
         logger.info(f"Starting training for {epochs} epochs")
 
         if self.use_mlflow:
-            mlflow.log_params({
-                "model": self.model.__class__.__name__,
-                "optimizer": self.optimizer.__class__.__name__,
-                "learning_rate": self.optimizer.param_groups[0]["lr"],
-                "batch_size": self.train_loader.batch_size,
-                "epochs": epochs,
-            })
+            mlflow.log_params(
+                {
+                    "model": self.model.__class__.__name__,
+                    "optimizer": self.optimizer.__class__.__name__,
+                    "learning_rate": self.optimizer.param_groups[0]["lr"],
+                    "batch_size": self.train_loader.batch_size,
+                    "epochs": epochs,
+                }
+            )
 
         for epoch in range(1, epochs + 1):
             # Training phase
@@ -191,7 +196,9 @@ class QuantScaleTrainer:
                     self.epochs_without_improvement = 0
                     if not save_best_only or (save_best_only and epoch > 1):
                         self._save_checkpoint(epoch, val_loss, is_best=True)
-                        logger.info(f"New best model saved with val_loss: {val_loss:.6f}")
+                        logger.info(
+                            f"New best model saved with val_loss: {val_loss:.6f}"
+                        )
                 else:
                     self.epochs_without_improvement += 1
 
@@ -218,7 +225,9 @@ class QuantScaleTrainer:
 
             # Learning rate scheduling
             if self.scheduler is not None:
-                if isinstance(self.scheduler, torch.optim.lr_scheduler.ReduceLROnPlateau):
+                if isinstance(
+                    self.scheduler, torch.optim.lr_scheduler.ReduceLROnPlateau
+                ):
                     self.scheduler.step(val_loss if self.val_loader else train_loss)
                 else:
                     self.scheduler.step()
@@ -320,6 +329,7 @@ class QuantScaleTrainer:
 
         # Calculate financial metrics
         import numpy as np
+
         predictions = np.array(all_predictions)
         targets = np.array(all_targets)
 
@@ -416,6 +426,7 @@ class QuantScaleTrainer:
 
         # Calculate comprehensive metrics
         import numpy as np
+
         predictions = np.array(all_predictions)
         targets = np.array(all_targets)
 

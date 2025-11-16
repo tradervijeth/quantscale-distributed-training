@@ -23,6 +23,7 @@ try:
     from ray.tune.schedulers import ASHAScheduler, PopulationBasedTraining
     from ray.tune.search.optuna import OptunaSearch
     from ray.tune.search.hyperopt import HyperOptSearch
+
     RAY_AVAILABLE = True
 except ImportError:
     RAY_AVAILABLE = False

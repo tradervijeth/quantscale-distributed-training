@@ -51,9 +51,9 @@ class AttentionLayer(nn.Module):
         attention_weights = F.softmax(attention_scores, dim=1)  # (batch, seq_len)
 
         # Compute weighted sum of LSTM outputs
-        context_vector = torch.bmm(
-            attention_weights.unsqueeze(1), lstm_output
-        ).squeeze(1)  # (batch, hidden_dim)
+        context_vector = torch.bmm(attention_weights.unsqueeze(1), lstm_output).squeeze(
+            1
+        )  # (batch, hidden_dim)
 
         return context_vector, attention_weights
 

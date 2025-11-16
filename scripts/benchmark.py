@@ -259,7 +259,9 @@ def benchmark_gpu_scaling(
 
     for n_gpus in num_gpus:
         if n_gpus > torch.cuda.device_count():
-            logger.warning(f"Skipping {n_gpus} GPUs (only {torch.cuda.device_count()} available)")
+            logger.warning(
+                f"Skipping {n_gpus} GPUs (only {torch.cuda.device_count()} available)"
+            )
             continue
 
         # Create model
@@ -406,7 +408,11 @@ def main():
     if args.gpu_scaling and device.type == "cuda":
         logger.info("\nRunning GPU scaling benchmark...")
 
-        model_class = TemporalFusionTransformer if args.model == "transformer" else BidirectionalLSTM
+        model_class = (
+            TemporalFusionTransformer
+            if args.model == "transformer"
+            else BidirectionalLSTM
+        )
         model_kwargs = {
             "input_dim": args.input_dim,
             "hidden_dim": args.hidden_dim,

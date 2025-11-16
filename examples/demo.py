@@ -187,9 +187,7 @@ def train_model(
     """
     print_header(f"STEP 4: Training {model_name}")
 
-    logger.info(
-        f"Model parameters: {sum(p.numel() for p in model.parameters()):,}"
-    )
+    logger.info(f"Model parameters: {sum(p.numel() for p in model.parameters()):,}")
 
     trainer = QuantScaleTrainer(
         model=model,
@@ -277,8 +275,14 @@ def plot_results(results_transformer: dict, results_lstm: dict) -> None:
         label="Transformer",
     )
     lim = [
-        min(results_transformer["targets"].min(), results_transformer["predictions"].min()),
-        max(results_transformer["targets"].max(), results_transformer["predictions"].max()),
+        min(
+            results_transformer["targets"].min(),
+            results_transformer["predictions"].min(),
+        ),
+        max(
+            results_transformer["targets"].max(),
+            results_transformer["predictions"].max(),
+        ),
     ]
     ax.plot(lim, lim, "r--", alpha=0.5)
     ax.set_xlabel("Actual Returns")
@@ -305,7 +309,9 @@ def plot_results(results_transformer: dict, results_lstm: dict) -> None:
 
     # Plot 3: Error distributions
     ax = axes[0, 2]
-    errors_transformer = results_transformer["predictions"] - results_transformer["targets"]
+    errors_transformer = (
+        results_transformer["predictions"] - results_transformer["targets"]
+    )
     errors_lstm = results_lstm["predictions"] - results_lstm["targets"]
     ax.hist(errors_transformer, bins=50, alpha=0.5, label="Transformer", density=True)
     ax.hist(errors_lstm, bins=50, alpha=0.5, label="LSTM", density=True)
@@ -349,9 +355,7 @@ def plot_results(results_transformer: dict, results_lstm: dict) -> None:
     x = np.arange(len(metrics_to_plot))
     width = 0.35
 
-    transformer_values = [
-        results_transformer["metrics"][m] for m in metrics_to_plot
-    ]
+    transformer_values = [results_transformer["metrics"][m] for m in metrics_to_plot]
     lstm_values = [results_lstm["metrics"][m] for m in metrics_to_plot]
 
     ax.bar(x - width / 2, transformer_values, width, label="Transformer", alpha=0.8)
@@ -378,12 +382,8 @@ def main():
     parser.add_argument(
         "--epochs", type=int, default=15, help="Number of training epochs"
     )
-    parser.add_argument(
-        "--batch-size", type=int, default=64, help="Batch size"
-    )
-    parser.add_argument(
-        "--no-plot", action="store_true", help="Skip plotting"
-    )
+    parser.add_argument("--batch-size", type=int, default=64, help="Batch size")
+    parser.add_argument("--no-plot", action="store_true", help="Skip plotting")
     args = parser.parse_args()
 
     print_header("QuantScale: Complete End-to-End Demo")
@@ -463,7 +463,9 @@ def main():
 
     print_header("Demo Completed Successfully!")
     logger.info("Thank you for trying QuantScale!")
-    logger.info("For more information, visit: https://github.com/tradervijeth/quantscale-distributed-training")
+    logger.info(
+        "For more information, visit: https://github.com/tradervijeth/quantscale-distributed-training"
+    )
 
 
 if __name__ == "__main__":
